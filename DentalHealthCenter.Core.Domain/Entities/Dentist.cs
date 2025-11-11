@@ -1,5 +1,7 @@
 ﻿
 
+using DentalHealthCenter.Core.Domain.Exceptions;
+using DentalHealthCenter.Core.Domain.ValueObjects;
 using System;
 
 namespace DentalHealthCenter.Core.Domain.Entities
@@ -8,6 +10,20 @@ namespace DentalHealthCenter.Core.Domain.Entities
     {
         public Guid Id { get; private set; }
         public string Name { get; private set; } = null!;
-        public string Email { get; private set; } = null!;
+        public Email Email { get; private set; } = null!;
+
+        public Dentist(string name, Email email)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new BusinessRuleException($"The {nameof(Name)} cannot be empty.");
+            }
+
+            
+
+            Id = Guid.NewGuid();
+            Name = name;
+            Email = email;
+        }
     }
 }

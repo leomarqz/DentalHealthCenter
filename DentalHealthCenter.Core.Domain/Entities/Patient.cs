@@ -1,5 +1,6 @@
 ﻿
 
+using DentalHealthCenter.Core.Domain.ValueObjects;
 using System;
 
 namespace DentalHealthCenter.Core.Domain.Entities
@@ -8,6 +9,13 @@ namespace DentalHealthCenter.Core.Domain.Entities
     {
         public Guid Id { get; private set; }
         public string Name { get; private set; } = null!;
-        public string Email { get; private set; } = null!;
+        public Email Email { get; private set; } = null!;
+
+        public Patient(string name, Email email)
+        {
+            Id = Guid.NewGuid();
+            Name = name;
+            Email = email;
+        }
     }
 }
