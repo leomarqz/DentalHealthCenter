@@ -1,6 +1,7 @@
 ﻿
 using DentalHealthCenter.Core.Domain.Exceptions;
 using DentalHealthCenter.Core.Domain.ValueObjects;
+using System;
 
 namespace DentalHealthCenter.Tests.Domain.ValueObjects
 {
