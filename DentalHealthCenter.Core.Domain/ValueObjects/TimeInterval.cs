@@ -1,5 +1,6 @@
 ﻿
 
+using DentalHealthCenter.Core.Domain.Exceptions;
 using System;
 
 namespace DentalHealthCenter.Core.Domain.ValueObjects
@@ -13,7 +14,7 @@ namespace DentalHealthCenter.Core.Domain.ValueObjects
         {
             if (start >= end)
             {
-                throw new ArgumentException("Start time must be earlier than end time.");
+                throw new BusinessRuleException("Start time must be earlier than end time.");
             }
 
             Start = start;
