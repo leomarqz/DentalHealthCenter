@@ -42,7 +42,7 @@ namespace DentalHealthCenter.Core.Domain.Entities
             {
                 // Lanzar una excepción si la cita no está en estado "Programada"
                 // Status: Scheduled, Completed, Canceled
-                throw new InvalidOperationException("Only scheduled appointments can be canceled.");
+                throw new BusinessRuleException("Only scheduled appointments can be canceled.");
             }
 
             Status = AppointmentStatus.Canceled;
@@ -53,7 +53,7 @@ namespace DentalHealthCenter.Core.Domain.Entities
             if(Status != AppointmentStatus.Scheduled)
             {
                 // Lanzar una excepción si la cita no está en estado "Programada"
-                throw new InvalidOperationException("Only scheduled appointments can be completed.");
+                throw new BusinessRuleException("Only scheduled appointments can be completed.");
             }
 
             Status = AppointmentStatus.Completed;
