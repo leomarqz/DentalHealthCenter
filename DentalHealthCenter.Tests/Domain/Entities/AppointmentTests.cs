@@ -81,5 +81,24 @@ namespace DentalHealthCenter.Tests.Domain.Entities
             //Assert.AreEqual(AppointmentStatus.Canceled, appointment.Status);
         }
 
+        [TestMethod]
+        // Validar que al completar una cita programada, su estado cambie a "Completada"
+        public void CompleteAppointment_ThatIsScheduled_ShouldSetStatusToCompleted()
+        {
+            var appointment = new Appointment(_patientId, _dentistId, _officeId, _interval);
+            appointment.Complete();
+            Assert.AreEqual(AppointmentStatus.Completed, appointment.Status);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BusinessRuleException))]
+        // Validar el lanzamiento de una excepcion al intentar completar una cita cancelada
+        public void CompleteAppointment_ThatIsCanceled_ShouldThrowBusinessRuleException()
+        {
+            var appointment = new Appointment(_patientId, _dentistId, _officeId, _interval);
+            appointment.Cancel();
+            appointment.Complete();
+        }
+
     }
 }
