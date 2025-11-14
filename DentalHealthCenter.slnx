@@ -2,6 +2,7 @@
   <Folder Name="/src/" />
   <Folder Name="/src/API/" />
   <Folder Name="/src/Core/">
+    <Project Path="DentalHealthCenter.Core.Application/DentalHealthCenter.Core.Application.csproj" Id="1775c285-581b-43db-8989-04c4c184fa98" />
     <Project Path="DentalHealthCenter.Core.Domain/DentalHealthCenter.Core.Domain.csproj" />
   </Folder>
   <Folder Name="/src/Infrastructure/" />
