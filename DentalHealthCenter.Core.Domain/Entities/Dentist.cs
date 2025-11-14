@@ -19,7 +19,10 @@ namespace DentalHealthCenter.Core.Domain.Entities
                 throw new BusinessRuleException($"The {nameof(Name)} cannot be empty.");
             }
 
-            
+            if(email is null)
+            {
+                throw new BusinessRuleException($"The {nameof(Email)} cannot be null.");
+            }
 
             Id = Guid.NewGuid();
             Name = name;
