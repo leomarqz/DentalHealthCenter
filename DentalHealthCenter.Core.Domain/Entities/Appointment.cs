@@ -1,5 +1,6 @@
 ﻿
 using DentalHealthCenter.Core.Domain.Enums;
+using DentalHealthCenter.Core.Domain.Exceptions;
 using DentalHealthCenter.Core.Domain.ValueObjects;
 using System;
 
@@ -24,7 +25,7 @@ namespace DentalHealthCenter.Core.Domain.Entities
             if (timeInterval.Start < DateTime.Now)
             {
                 // Lanzar una excepción si la fecha de inicio es en el pasado
-                throw new ArgumentException("Start date cannot be in the past.");
+                throw new BusinessRuleException("Start date cannot be in the past.");
             }
 
             Id = Guid.NewGuid();
