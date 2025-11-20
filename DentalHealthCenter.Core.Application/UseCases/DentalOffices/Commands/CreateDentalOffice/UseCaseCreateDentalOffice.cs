@@ -7,7 +7,7 @@ using FluentValidation;
 using System;
 using System.Threading.Tasks;
 
-namespace DentalHealthCenter.Core.Application.UseCases.Office.Commands.CreateDentalOffice
+namespace DentalHealthCenter.Core.Application.UseCases.DentalOffices.Commands.CreateDentalOffice
 {
     public class UseCaseCreateDentalOffice
     {

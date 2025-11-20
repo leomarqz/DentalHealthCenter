@@ -2,7 +2,7 @@
 
 using FluentValidation;
 
-namespace DentalHealthCenter.Core.Application.UseCases.Office.Commands.CreateDentalOffice
+namespace DentalHealthCenter.Core.Application.UseCases.DentalOffices.Commands.CreateDentalOffice
 {
     public class CreateDentalOfficeCommandValidator : AbstractValidator<CreateDentalOfficeCommand>
     {
