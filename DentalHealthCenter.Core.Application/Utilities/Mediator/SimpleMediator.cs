@@ -3,6 +3,7 @@ using DentalHealthCenter.Core.Application.Exceptions;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DentalHealthCenter.Core.Application.Utilities.Mediator
@@ -26,7 +27,8 @@ namespace DentalHealthCenter.Core.Application.Utilities.Mediator
             if(validator is not null)
             {
                 var validateAsyncMethod = validatorType.GetMethod("ValidateAsync");
-                var validatorTask = (Task)validateAsyncMethod!.Invoke(validator, new object[] { request })!;
+                var validatorTask = (Task)validateAsyncMethod!
+                    .Invoke(validator, new object[] { request, CancellationToken.None })!;
 
                 await validatorTask.ConfigureAwait(false);
 

@@ -4,6 +4,7 @@ using DentalHealthCenter.Core.Application.Contracts.Repositories;
 using DentalHealthCenter.Core.Application.Exceptions;
 using DentalHealthCenter.Core.Application.UseCases.DentalOffices.Commands.CreateDentalOffice;
 using DentalHealthCenter.Core.Domain.Entities;
+using DentalHealthCenter.Core.Domain.Exceptions;
 using FluentValidation;
 using FluentValidation.Results;
 using NSubstitute;
@@ -46,27 +47,27 @@ namespace DentalHealthCenter.Tests.Application.UseCases.DentalOffices
 
         }
 
-        [TestMethod] // throw 
-        public async Task Handle_ShouldThrowException_WhenCommandIsNotValid()
-        {
-            var command = new CreateDentalOfficeCommand { Name = string.Empty };
+        //[TestMethod] // throw - ya se valida en el mediator
+        //public async Task Handle_ShouldThrowException_WhenCommandIsNotValid()
+        //{
+        //    var command = new CreateDentalOfficeCommand { Name = "" };
 
-            //Error Manual
-            var inValidResult = new ValidationResult(new[]
-            {
-                new ValidationFailure("Name", "El Nombre es obligatorio")
-            });
+        //    //Error Manual
+        //    var inValidResult = new ValidationResult(new[]
+        //    {
+        //        new ValidationFailure("Name", "El Nombre es obligatorio")
+        //    });
 
-            //Validamos si lanza la excepcion personalida
-            await Assert.ThrowsExceptionAsync<ErrorValidationException>(async () =>
-            {
-                await _useCase.Handle(command);
-            });
+        //    //Validamos si lanza la excepcion personalizada (BusinessRuleException)
+        //    await Assert.ThrowsExceptionAsync<BusinessRuleException>(async () =>
+        //    {
+        //        await _useCase.Handle(command);
+        //    });
 
-            // no recibimos nada en el repositorio
-            await _repository.DidNotReceive().Add(Arg.Any<DentalOffice>());
+        //    // no recibimos nada en el repositorio
+        //    await _repository.DidNotReceive().Add(Arg.Any<DentalOffice>());
 
-        }
+        //}
 
         [TestMethod] //validamos que se haga un rollback cuando se genera un error al persistir en la base de datos
         public async Task Handle_ShouldRollback_WhenErrorOccursWhileSaving()
