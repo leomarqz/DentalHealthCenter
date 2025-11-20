@@ -1,5 +1,7 @@
 ﻿
 using DentalHealthCenter.Core.Application.Exceptions;
+using FluentValidation;
+using FluentValidation.Results;
 using System;
 using System.Threading.Tasks;
 
@@ -16,6 +18,29 @@ namespace DentalHealthCenter.Core.Application.Utilities.Mediator
 
         public async Task<TResponse> Send<TResponse>(IRequest<TResponse> request)
         {
+
+            var validatorType = typeof(IValidator<>).MakeGenericType(request.GetType());
+
+            var validator = _serviceProdiver.GetService(validatorType);
+
+            if(validator is not null)
+            {
+                var validateAsyncMethod = validatorType.GetMethod("ValidateAsync");
+                var validatorTask = (Task)validateAsyncMethod!.Invoke(validator, new object[] { request })!;
+
+                await validatorTask.ConfigureAwait(false);
+
+                var result = validatorTask.GetType().GetProperty("Result");
+
+                var validationResult = (ValidationResult)result!.GetValue(validatorTask)!;
+
+                if (!validationResult.IsValid)
+                {
+                    throw new ErrorValidationException(validationResult);
+                }
+
+            }
+
             var useCaseType = typeof(IRequestHandler<,>)
                 .MakeGenericType(request.GetType(), typeof(TResponse));
 

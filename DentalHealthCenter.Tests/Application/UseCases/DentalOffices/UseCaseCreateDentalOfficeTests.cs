@@ -16,7 +16,6 @@ namespace DentalHealthCenter.Tests.Application.UseCases.DentalOffices
     public class UseCaseCreateDentalOfficeTests
     {
         private IDentalOfficeRepository _repository;
-        private IValidator<CreateDentalOfficeCommand> _validator;
         private IUnitOfWork _unitOfWork;
         private UseCaseCreateDentalOffice _useCase;
 
@@ -24,9 +23,8 @@ namespace DentalHealthCenter.Tests.Application.UseCases.DentalOffices
         public void Setup()
         {
             _repository = Substitute.For<IDentalOfficeRepository>();
-            _validator = Substitute.For<IValidator<CreateDentalOfficeCommand>>();
             _unitOfWork = Substitute.For<IUnitOfWork>();
-            _useCase = new UseCaseCreateDentalOffice(_repository, _unitOfWork, _validator);
+            _useCase = new UseCaseCreateDentalOffice(_repository, _unitOfWork);
         }
 
         [TestMethod] // Test for successful creation of a dental office
@@ -34,7 +32,6 @@ namespace DentalHealthCenter.Tests.Application.UseCases.DentalOffices
         {
             var command = new CreateDentalOfficeCommand { Name = "Healthy Smiles" };
 
-            _validator.ValidateAsync(command).Returns(new ValidationResult());
 
             var officeCreated = new DentalOffice("Healthy Smiles");
 
@@ -42,7 +39,6 @@ namespace DentalHealthCenter.Tests.Application.UseCases.DentalOffices
 
             var result = await _useCase.Handle(command);
 
-            await _validator.Received(1).ValidateAsync(command);
             await _repository.Received(1).Add(Arg.Any<DentalOffice>());
             await _unitOfWork.Received(1).Commit();
 
@@ -60,10 +56,6 @@ namespace DentalHealthCenter.Tests.Application.UseCases.DentalOffices
             {
                 new ValidationFailure("Name", "El Nombre es obligatorio")
             });
-
-            //validamos
-            _validator.ValidateAsync(command).Returns(inValidResult);
-
 
             //Validamos si lanza la excepcion personalida
             await Assert.ThrowsExceptionAsync<ErrorValidationException>(async () =>
@@ -83,8 +75,6 @@ namespace DentalHealthCenter.Tests.Application.UseCases.DentalOffices
 
             // Simulamos un error en el repositorio
             _repository.Add(Arg.Any<DentalOffice>()).Throws<Exception>();
-
-            _validator.ValidateAsync(command).Returns(new ValidationResult());
 
             //Ejecutamos el caso de uso y validamos que lance la excepcion
             await Assert.ThrowsExceptionAsync<Exception>(async () =>
