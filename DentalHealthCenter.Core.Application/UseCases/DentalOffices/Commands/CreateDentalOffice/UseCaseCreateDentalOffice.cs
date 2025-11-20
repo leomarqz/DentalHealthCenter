@@ -2,6 +2,7 @@
 using DentalHealthCenter.Core.Application.Contracts.Persistence;
 using DentalHealthCenter.Core.Application.Contracts.Repositories;
 using DentalHealthCenter.Core.Application.Exceptions;
+using DentalHealthCenter.Core.Application.Utilities.Mediator;
 using DentalHealthCenter.Core.Domain.Entities;
 using FluentValidation;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DentalHealthCenter.Core.Application.UseCases.DentalOffices.Commands.CreateDentalOffice
 {
-    public class UseCaseCreateDentalOffice
+    public class UseCaseCreateDentalOffice : IRequestHandler<CreateDentalOfficeCommand, Guid>
     {
         private readonly IDentalOfficeRepository _repository;
         private readonly IUnitOfWork _unitOfWork;
