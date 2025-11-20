@@ -26,17 +26,16 @@ namespace DentalHealthCenter.Core.Application.UseCases.DentalOffices.Commands.Cr
         {
             try
             {
-
                 var office = new DentalOffice(command.Name);
                 var response = await _repository.Add(office);
 
-                await _unitOfWork.Commit();
+                await _unitOfWork.CommitAsync();
 
                 return response.Id;
             }catch (Exception ex)
             {
-                await _unitOfWork.Rollback();
-                throw;
+                await _unitOfWork.RollbackAsync();
+                throw ex;
             }
         }
     }

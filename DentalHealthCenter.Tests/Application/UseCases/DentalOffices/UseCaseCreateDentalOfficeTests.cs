@@ -41,7 +41,7 @@ namespace DentalHealthCenter.Tests.Application.UseCases.DentalOffices
             var result = await _useCase.Handle(command);
 
             await _repository.Received(1).Add(Arg.Any<DentalOffice>());
-            await _unitOfWork.Received(1).Commit();
+            await _unitOfWork.Received(1).CommitAsync();
 
             Assert.AreNotEqual(Guid.Empty, result);
 
@@ -84,7 +84,7 @@ namespace DentalHealthCenter.Tests.Application.UseCases.DentalOffices
             });
 
             // Validamos que se haya llamado a Rollback
-            await _unitOfWork.Received(1).Rollback();
+            await _unitOfWork.Received(1).RollbackAsync();
         }
 
     }
