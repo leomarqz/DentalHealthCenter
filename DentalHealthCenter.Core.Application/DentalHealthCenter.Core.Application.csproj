@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="UseCases\DentalOffices\Queries\" />
+    <Folder Include="UseCases\DentalOffices\Queries\GetDentalOffices\" />
   </ItemGroup>
 
   <ItemGroup>
