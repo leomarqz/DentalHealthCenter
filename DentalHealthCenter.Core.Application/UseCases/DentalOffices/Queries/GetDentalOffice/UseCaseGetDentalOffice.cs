@@ -25,13 +25,7 @@ namespace DentalHealthCenter.Core.Application.UseCases.DentalOffices.Queries.Get
                 throw new NotFoundException();
             }
 
-            var dto = new DentalOfficeDTO
-            {
-                Id = office.Id,
-                Name = office.Name
-            };
-
-            return dto;
+            return office.ToDTO();
         }
     }
 }
