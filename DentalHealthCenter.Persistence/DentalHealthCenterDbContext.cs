@@ -11,6 +11,14 @@ namespace DentalHealthCenter.Persistence
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Apply all configurations from the current assembly
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(DentalHealthCenterDbContext).Assembly);
+        }
+
         public DbSet<DentalOffice> DentalOffices { get; set; }
     }
 }
