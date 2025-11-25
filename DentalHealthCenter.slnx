@@ -5,7 +5,9 @@
     <Project Path="DentalHealthCenter.Core.Application/DentalHealthCenter.Core.Application.csproj" Id="1775c285-581b-43db-8989-04c4c184fa98" />
     <Project Path="DentalHealthCenter.Core.Domain/DentalHealthCenter.Core.Domain.csproj" />
   </Folder>
-  <Folder Name="/src/Infrastructure/" />
+  <Folder Name="/src/Infrastructure/">
+    <Project Path="DentalHealthCenter.Persistence/DentalHealthCenter.Persistence.csproj" Id="9dbe9381-61c6-470e-a0e8-1750898fb872" />
+  </Folder>
   <Folder Name="/src/Tests/">
     <Project Path="DentalHealthCenter.Tests/DentalHealthCenter.Tests.csproj" Id="33ecedbb-453c-44ae-83c5-3fb2f3e9b74f" />
   </Folder>
