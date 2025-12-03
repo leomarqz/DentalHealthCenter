@@ -35,7 +35,7 @@ namespace DentalHealthCenter.Core.Application.UseCases.DentalOffices.Commands.Cr
             }catch (Exception ex)
             {
                 await _unitOfWork.RollbackAsync();
-                throw ex;
+                throw;
             }
         }
     }
