@@ -18,14 +18,14 @@ namespace DentalHealthCenter.Core.Application.UseCases.DentalOffices.Queries.Get
 
         public async Task<DentalOfficeDTO> Handle(GetDentalOfficeQuery request)
         {
-            var office = await this.reposotiry.GetById(request.Id);
+            var office = await this.reposotiry.GetByIdAsync(request.Id);
 
             if(office is null)
             {
                 throw new NotFoundException();
             }
 
-            return office.ToDTO();
+            return office.ToDto();
         }
     }
 }

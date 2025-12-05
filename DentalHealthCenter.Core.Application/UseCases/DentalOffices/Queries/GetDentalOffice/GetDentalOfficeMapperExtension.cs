@@ -3,9 +3,9 @@ using DentalHealthCenter.Core.Domain.Entities;
 
 namespace DentalHealthCenter.Core.Application.UseCases.DentalOffices.Queries.GetDentalOffice
 {
-    public static class MapperExtension
+    public static class GetDentalOfficeMapperExtension
     {
-        public static DentalOfficeDTO ToDTO(this DentalOffice office)
+        public static DentalOfficeDTO ToDto(this DentalOffice office)
         {
             return new DentalOfficeDTO
             {

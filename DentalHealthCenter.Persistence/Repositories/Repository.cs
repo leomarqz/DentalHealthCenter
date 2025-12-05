@@ -2,6 +2,9 @@
 
 using DentalHealthCenter.Core.Application.Contracts.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DentalHealthCenter.Persistence.Repositories
 {
@@ -26,12 +29,12 @@ namespace DentalHealthCenter.Persistence.Repositories
             return Task.CompletedTask;
         }
 
-        public async Task<IEnumerable<TEntity>> GetAll()
+        public async Task<List<TEntity>> ToListAsync()
         {
             return await this.context.Set<TEntity>().ToListAsync();
         }
 
-        public async Task<TEntity?> GetById(Guid id)
+        public async Task<TEntity?> GetByIdAsync(Guid id)
         {
             return await this.context.Set<TEntity>().FindAsync(id);
         }

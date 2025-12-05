@@ -32,7 +32,7 @@ namespace DentalHealthCenter.Tests.Application.UseCases.DentalOffices
 
             var query = new GetDentalOfficeQuery { Id = id };
 
-            this.repository.GetById(id).Returns(office);
+            this.repository.GetByIdAsync(id).Returns(office);
 
             // test
             var result = await this.useCase.Handle(query);
@@ -51,7 +51,7 @@ namespace DentalHealthCenter.Tests.Application.UseCases.DentalOffices
             var id = Guid.NewGuid();
             var query = new GetDentalOfficeQuery { Id = id };
 
-            this.repository.GetById(id).ReturnsNull();
+            this.repository.GetByIdAsync(id).ReturnsNull();
 
             await useCase.Handle(query);
         }
