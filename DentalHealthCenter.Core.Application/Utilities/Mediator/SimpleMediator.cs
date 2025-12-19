@@ -20,11 +20,44 @@ namespace DentalHealthCenter.Core.Application.Utilities.Mediator
         public async Task<TResponse> Send<TResponse>(IRequest<TResponse> request)
         {
 
+            await HandleValidations(request);
+
+            var useCaseType = typeof(IRequestHandler<,>)
+                .MakeGenericType(request.GetType(), typeof(TResponse));
+
+            var useCase = _serviceProdiver.GetService(useCaseType);
+
+            if(useCase is null)
+            {
+                throw new MediatorException($"No se encontro un handler para {request.GetType().Name}");
+            }
+
+            var handlerMethod = useCaseType.GetMethod("Handle")!;
+
+            return await (Task<TResponse>) handlerMethod.Invoke(useCase, new object[] { request })!;
+        }
+
+        public async Task Send(IRequest request)
+        {
+            await HandleValidations(request);
+
+            var useCaseType = typeof(IRequestHandler<>).MakeGenericType( request.GetType() );
+            var useCase = _serviceProdiver.GetService(useCaseType);
+            if(useCase is null)
+            {
+                throw new MediatorException($"No se encontro un handler para {request.GetType().Name}");
+            }
+            var method = useCaseType.GetMethod("Handle")!;
+            await (Task)method.Invoke(useCase, new object[] { request })!;
+        }
+
+        private async Task HandleValidations(object request)
+        {
             var validatorType = typeof(IValidator<>).MakeGenericType(request.GetType());
 
             var validator = _serviceProdiver.GetService(validatorType);
 
-            if(validator is not null)
+            if (validator is not null)
             {
                 var validateAsyncMethod = validatorType.GetMethod("ValidateAsync");
                 var validatorTask = (Task)validateAsyncMethod!
@@ -42,20 +75,6 @@ namespace DentalHealthCenter.Core.Application.Utilities.Mediator
                 }
 
             }
-
-            var useCaseType = typeof(IRequestHandler<,>)
-                .MakeGenericType(request.GetType(), typeof(TResponse));
-
-            var useCase = _serviceProdiver.GetService(useCaseType);
-
-            if(useCase is null)
-            {
-                throw new MediatorException($"No se encontro un handler para {request.GetType().Name}");
-            }
-
-            var handlerMethod = useCaseType.GetMethod("Handle")!;
-
-            return await (Task<TResponse>) handlerMethod.Invoke(useCase, new object[] { request })!;
         }
     }
 }
